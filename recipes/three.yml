@@ -1,0 +1,6 @@
+proj:
+    package.json: package.json
+    webpack.config.js: webpack.config.js
+base: three
+vars:
+    three: true
