@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='hotplate',
-    version='0.0.1',
+    version='0.0.2',
     description='simple boilerplates',
     url='https://github.com/frnsys/hotplate',
     author='Francis Tseng (@frnsys)',
@@ -15,6 +15,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        hotplate=main:main
+        hotplate=hotplate:main
     ''',
 )

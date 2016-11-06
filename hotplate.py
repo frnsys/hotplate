@@ -4,13 +4,14 @@ import click
 from functools import reduce
 from jinja2 import Environment, FileSystemLoader, meta
 
+here = os.path.dirname(os.path.realpath(__file__))
 env = Environment(
-    loader=FileSystemLoader('templates'),
+    loader=FileSystemLoader(os.path.join(here, 'templates')),
     trim_blocks=True, lstrip_blocks=True)
 
 
 def load_recipe(name):
-    fname = os.path.join('recipes', '{}.yml'.format(name))
+    fname = os.path.join(here, 'recipes', '{}.yml'.format(name))
     with open(fname, 'r') as f:
         return yaml.load(f)
 
@@ -62,11 +63,11 @@ def _template_vars(name):
 def _apply_base(base, proj):
     """takes a template 'base' directory and modifies
     the recipe project to mirror its structure & templates"""
-    for path, dirs, files in os.walk(os.path.join('templates', base)):
-        fullpath = path.split('/')
+    for path, dirs, files in os.walk(os.path.join(here, 'templates', base)):
+        fullpath = path.replace(here + '/', '').split('/')
         projpath = fullpath[2:]
         tmplpath = fullpath[1:]
-        data = {fname: os.path.join(*tmplpath, fname) for fname in files}
+        data = {fname: '/'.join(tmplpath + [fname]) for fname in files}
 
         if projpath:
             parent = reduce(dict.get, projpath[:-1], proj)
