@@ -95,9 +95,9 @@ proj:
     index.html: three/index.html
     main.js: three/main.js
     app:
-        Scene.js: three/Scene.js
+        Scene.js: three/app/Scene.js
     css:
-        main.sass: three/main.sass
+        main.sass: three/css/main.sass
 ```
 
 That's too redundant. Instead, you can specify a "base" template directory, which is automatically mirrored to the new project:
