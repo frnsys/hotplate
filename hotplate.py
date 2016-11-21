@@ -1,6 +1,7 @@
 import os
 import yaml
 import click
+import subprocess
 from functools import reduce
 from jinja2 import Environment, FileSystemLoader, meta
 
@@ -98,7 +99,6 @@ def main(recipe, path):
     if 'base' in recipe:
         proj = _apply_base(recipe['base'], proj)
 
-
     # load variables specified by the recipe
     data = recipe['vars'] if 'vars' in recipe else {}
     del recipe['vars']
@@ -110,3 +110,9 @@ def main(recipe, path):
 
     # make the project
     make(path, proj, data)
+
+    # run any post-setup commands
+    if 'cmds' in recipe:
+        for cmd in recipe['cmds']:
+            proc = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, cwd=path)
+            out, err = proc.communicate()

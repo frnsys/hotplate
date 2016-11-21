@@ -4,3 +4,5 @@ proj:
 base: three
 vars:
     three: true
+cmds:
+    - npm install -d
